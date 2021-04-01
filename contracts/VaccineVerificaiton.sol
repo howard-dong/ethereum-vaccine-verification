@@ -2,7 +2,6 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract TodoList {
     //    uint public taskCount = 0;
-    address owner;
     address provider;
 
     struct record {
@@ -15,7 +14,7 @@ contract TodoList {
     mapping(userAddress => record) public records;
 
 
-    event TaskCompleted (
+    event RecordCreated (
         string date,
         string type,
         string userAddress,
@@ -23,21 +22,20 @@ contract TodoList {
     );
 
     constructor()  {
-        owner = msg.sender;
+        provider = msg.sender;
         //        provider = random;
     }
 
 
 
     function createRecord(string memory _date, string memory _type, string memory _userAddress) public {
-        //        require(msg.sender == owner);
+        require(msg.sender == provider);
         records[_userAddress] = record(_date, _type, _userAddress, true);
-        emit RecordCreated(_date, _type, _userAddress, true);
+//        emit RecordCreated(_date, _type, _userAddress, true);
     }
 
-    function accessRecord(string memory _userAddress) {
-        require(msg.sender == owner);
-        if (records[_address] != null) {
+    function accessRecord() {
+        if (records[msg.sender] != null) {
             //Definitely not the right way to emit it
             emit RecordCreated(_date, _type, _userAddress, true);
         }
