@@ -6,39 +6,42 @@ contract TodoList {
 
     struct record {
         string date;
-        string type;
-        string userAddress;
-        bool completed;
+        string brand;
+        address userAddress;
     }
 
-    mapping(userAddress => record) public records;
+    mapping(address => record) public records;
 
 
     event RecordCreated (
         string date,
-        string type,
-        string userAddress,
-        bool completed
+        string brand,
+        address userAddress
     );
 
-    constructor()  {
+    constructor() public{
         provider = msg.sender;
         //        provider = random;
     }
 
 
 
-    function createRecord(string memory _date, string memory _type, string memory _userAddress) public {
+    function createRecord(string memory _date, string memory _brand, address _userAddress) public {
         require(msg.sender == provider);
-        records[_userAddress] = record(_date, _type, _userAddress, true);
+        records[_userAddress] = record(_date, _brand, _userAddress);
 //        emit RecordCreated(_date, _type, _userAddress, true);
     }
 
-    function accessRecord() {
-        if (records[msg.sender] != null) {
-            //Definitely not the right way to emit it
-            emit RecordCreated(_date, _type, _userAddress, true);
-        }
+    function accessRecord() public{
+//        if (records[msg.sender] != null) {
+//            //Definitely not the right way to emit it
+//            emit RecordCreated(_date, _type, _userAddress, true);
+//        }
+        record memory _record = records[msg.sender];
+        string memory record_date = _record.date;
+        string memory record_brand = _record.brand;
+        address user_address = _record.userAddress;
+        emit RecordCreated(record_date, record_brand, user_address);
     }
 
     //    function toggleCompleted(uint _id) public {
