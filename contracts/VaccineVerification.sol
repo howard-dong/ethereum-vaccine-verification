@@ -6,16 +6,12 @@ contract VaccineVerification {
 
     constructor() public {}
 
-    function storeHash(string memory _hash, address user
-    ) public {
-//        records[_userAddress].push(
-//            Record(_date, _brand, _userAddress, _provider)
-//        );
+    function storeHash(string memory _hash, address user) public {
         hashes[user] = _hash;
     }
 
-    function getHash() public payable returns(string memory userHash){
-        require(msg.value == 1 ether, "You must pay one ether to access the hash");
+    function getHash() public view returns(string memory _hashes){
+//        require(msg.value == 1 ether, "You must pay one ether to atccess the hash");
         return(hashes[msg.sender]);
     }
 }

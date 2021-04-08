@@ -1,6 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState, useEffect } from 'react'
+import 'antd/dist/antd.css';
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Input, Button, Spin } from 'antd';
+const { TextArea } = Input;
+const { BufferList } = require('bl')
+
 
 const ipfsAPI = require('ipfs-http-client');
 const ipfs = ipfsAPI({host: 'ipfs.infura.io', port: '5001', protocol: 'https' })
@@ -56,7 +61,6 @@ function App(){
        }
         return (
             <div className="App">
-              <Header />
               <div style={{position:'fixed',textAlign:'right',right:0,top:0,padding:10}}>
               </div>
 
@@ -90,7 +94,7 @@ function App(){
         }
 
 
-//function App() {
+// function App() {
 //  return (
 //    <div className="App">
 //      <header className="App-header">
@@ -109,6 +113,6 @@ function App(){
 //      </header>
 //    </div>
 //  );
-//}
+// }
 
 export default App;
