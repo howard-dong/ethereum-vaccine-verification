@@ -15,7 +15,7 @@ contract VaccineVerification {
     }
 
     function getHash() public payable returns(string memory userHash){
-        require(msg.value == 1 ether, "You must pay one ether to access the hash");
+        //require(msg.value == 1 ether, "You must pay one ether to access the hash");
         return(hashes[msg.sender]);
     }
 }
