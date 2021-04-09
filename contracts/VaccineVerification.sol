@@ -9,6 +9,7 @@ contract VaccineVerification {
         owner=msg.sender;
     }
 
+
     function storeHash(string memory _hash, address user
     ) public {
         hashes[user] = _hash;
@@ -18,6 +19,7 @@ contract VaccineVerification {
         require(msg.value == 1 ether, "You must pay one ether to access the hash.");
         owner.transfer(msg.value);
         return(hashes[msg.sender]); 
+
     }
 
 }
