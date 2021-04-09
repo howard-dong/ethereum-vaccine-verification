@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import User from "./components/User"
 import 'antd/dist/antd.css';
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Input, Button, Spin } from 'antd';
@@ -131,6 +132,7 @@ function App() {
           storeHashRecords(ipfsHash, patientAddress)
         }}>Add this hash on ethereum</Button>
       </div>
+
 
     </div>
   );
