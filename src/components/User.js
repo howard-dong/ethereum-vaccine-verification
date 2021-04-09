@@ -20,14 +20,19 @@ function User() {
 
     const AccessHash = () => {
         setLoading(true);
-        contract.methods.getHash().send({ from: account })
+        contract.methods.getHash().send({ from: account, value: "1 ether" })
         .once('receipt', (receipt) => {
           setLoading(false);
         })
     }
 
     return (
-        <div></div>
+        <div>
+            <button onClick = {AccessHash}>
+                Get Hash
+            </button>
+
+        </div>
     );
 }
 
