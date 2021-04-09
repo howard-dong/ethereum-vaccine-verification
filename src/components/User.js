@@ -26,7 +26,7 @@ function User() {
 
     return (
         <div>
-            <button onClick = {AccessHash}>
+            <button onClick = {retrieveRecordHash}>
                 Get Hash
             </button>
 
