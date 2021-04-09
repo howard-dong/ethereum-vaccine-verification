@@ -43,50 +43,19 @@ function App() {
 
 
   const [contract, setContract] = useState();
-  //  const [account, setAccount] = useState();
   const [recordHash, setRecordHash] = useState("");
 
   useEffect(() => {
-    loadBlockchainData()
-  }, [])
-
-  const loadBlockchainData = async () =>{
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
       window.ethereum.enable();
     }
     const web3 = new Web3("http://localhost:7545")
-    const accounts = await web3.eth.getAccounts()
-    console.log(accounts)
-    // setAccount(accounts[1])
-    // console.log(account)
+    const accounts = web3.eth.getAccounts()
+    accounts.then(result =>
+      setAccount(result[0]))
     setContract(new web3.eth.Contract(VaccineJson.abi, VaccineJson.networks[5777].address))
-  }
-  //  useEffect(() => {
-  //   loadweb3()
-  //   loadBlockchainData()
-  // })
-
-  // const loadweb3 = async () => {
-  //   if (window.ethereum) {
-  //     window.web3 = new Web3(window.ethereum)
-  //     await window.ethereum.enable()
-  //   }
-  //   else if (window.web3) {
-  //     window.web3 = new Web3(window.web3.currentProvider)
-  //   }
-  //   else {
-  //     window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
-  //   }
-  // }    
-
-  // const loadBlockchainData = async () => {
-  //   const web3 = window.web3
-  //   const accounts = await web3.eth.getAccounts()
-  //   console.log(accounts)
-  //   const networkId = await web3.eth.net.getId()
-  //   console.log(networkId)
-  // }
+  }, [])
 
   const asyncGetFile = async () => {
     let result = await getFromIPFS(ipfsHash)
@@ -96,7 +65,6 @@ function App() {
   const storeHashRecords = () => {
     contract.methods.storeHash(ipfsHash, patientAddress).send({ from: account }).then((r) =>{})
   }
-
 
   useEffect(() => {
     if (ipfsHash) asyncGetFile()
@@ -164,34 +132,9 @@ function App() {
         }}>Add this hash on ethereum</Button>
       </div>
 
-      {/* <div style={{padding:32,textAlign: "left"}}>
-        {attestationDisplay}
-      </div> */}
-
     </div>
   );
 }
 
-
-// function App() {
-//  return (
-//    <div className="App">
-//      <header className="App-header">
-//        <img src={logo} className="App-logo" alt="logo" />
-//        <p>
-//          Edit <code>src/App.js</code> and save to reload.
-//        </p>
-//        <a
-//          className="App-link"
-//          href="https://reactjs.org"
-//          target="_blank"
-//          rel="noopener noreferrer"
-//        >
-//          Learn React
-//        </a>
-//      </header>
-//    </div>
-//  );
-// }
 
 export default App;
