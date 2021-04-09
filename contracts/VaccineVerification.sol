@@ -11,9 +11,6 @@ contract VaccineVerification {
 
     function storeHash(string memory _hash, address user
     ) public {
-//        records[_userAddress].push(
-//            Record(_date, _brand, _userAddress, _provider)
-//        );
         hashes[user] = _hash;
     }
 
