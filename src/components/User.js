@@ -14,19 +14,18 @@ function User() {
         }
         const web3 = new Web3("http://localhost:7545")
         const accounts = web3.eth.getAccounts()
-        console.log(web3)
-        console.log(accounts)
-        setAccount(accounts[1])
+        accounts.then(result =>
+            setAccount(result[0]))
         setContract(new web3.eth.Contract(ContractJson.abi, ContractJson.networks[5777].address))
     }, [])
 
     const retrieveRecordHash = () => {
-        contract.methods.getHash().call({ from: account, value: "1 ether" }).then(setRecordHash)
+        contract.methods.getHash().send({ from: account, value: 10**18 }).then(setRecordHash)
     }
 
     return (
         <div>
-            <button onClick = {retrieveRecordHash}>
+            <button onClick={retrieveRecordHash}>
                 Get Hash
             </button>
 
