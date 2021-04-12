@@ -1,26 +1,33 @@
-import React, { Component} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import {NavigationContainer} from "@react-navigation/native";
-import {createStackNavigator} from "@react-navigation/stack";
+import React, { Component } from 'react';
+import { Route, Link, BrowserRouter as Router } from "react-router-dom";
+import ReactDOM from "react-dom";
+import logo from './logo.svg';
+import './App.css';
+import 'antd/dist/antd.css';
+import React, { useState, useEffect } from 'react';
 import Provider from './components/Provider'
 import User from './components/User'
 
-const Stack = createStackNavigator()
 
-function App({navigation}) {
+function App() {
     return (
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name="Main" component={App} />
-                <Stack.Screen name="Provider" component={Provider} />
-                <Stack.Screen name="User" component={User} />
-            </Stack.Navigator>
-        </NavigationContainer>
-        <Button title="Health Provider"
-        onPress={() => navigation.navigate("Provider")} />
-        <Button title="Patient Record Access"
-        onPress={() => navigation.navigate("User")} />
-    )
+        <div className="App">
+          <Router>
+            <div>
+              <ul>
+                <li>
+                  <Link to="/provider">Health Provider</Link>
+                </li>
+                <li>
+                  <Link to="/user">Users</Link>
+                </li>
+              </ul>
+              <Route path="/about" component={Provider} />
+              <Route path="/users" component={User} />
+            </div>
+          </Router>
+        </div>
+    );
 }
 
 
