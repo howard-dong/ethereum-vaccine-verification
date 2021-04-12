@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { Route, Link, BrowserRouter as Router } from "react-router-dom";
 import ReactDOM from "react-dom";
 import logo from './logo.svg';
 import './App.css';
 import 'antd/dist/antd.css';
-import React, { useState, useEffect } from 'react';
 import Provider from './components/Provider'
 import User from './components/User'
 

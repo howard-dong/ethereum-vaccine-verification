@@ -1,11 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
-import User from "./components/User"
+import './../App.css';
+import User from "./User"
 import 'antd/dist/antd.css';
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Input, Button, Spin } from 'antd';
 import Web3 from 'web3';
-import VaccineJson from "./contracts/VaccineVerification.json"
+import VaccineJson from "./../contracts/VaccineVerification.json"
 
 const { TextArea } = Input;
 const { BufferList } = require('bl')
@@ -33,7 +32,7 @@ const addToIPFS = async fileToUpload => {
   }
 }
 
-function App() {
+function Provider() {
   const [data, setData] = useState()
   const [sending, setSending] = useState()
   const [loading, setLoading] = useState()

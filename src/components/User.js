@@ -23,6 +23,8 @@ function User() {
         contract.methods.getHash().send({ from: account, value: 10**18 }).then(setRecordHash)
     }
 
+    
+
     return (
         <div>
             <button onClick={retrieveRecordHash}>
