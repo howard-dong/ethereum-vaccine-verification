@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Input, Button, Spin } from 'antd';
 import Web3 from 'web3';
 import VaccineJson from "./../contracts/VaccineVerification.json"
+import {useSmartContract} from "../hooks/LoadContract"
 
 const { TextArea } = Input;
 const { BufferList } = require('bl')
@@ -41,9 +42,8 @@ function Provider() {
   const [patientAddress, setPatientAddress] = useState()
   const [account, setAccount] = useState();
 
-
-  const [contract, setContract] = useState();
   const [recordHash, setRecordHash] = useState("");
+  const {addRecord} = useSmartContract()
 
   useEffect(() => {
     if (window.ethereum) {
@@ -54,16 +54,11 @@ function Provider() {
     const accounts = web3.eth.getAccounts()
     accounts.then(result =>
       setAccount(result[0]))
-    setContract(new web3.eth.Contract(VaccineJson.abi, VaccineJson.networks[5777].address))
   }, [])
 
   const asyncGetFile = async () => {
     let result = await getFromIPFS(ipfsHash)
     setIpfsContents(result.toString())
-  }
-
-  const storeHashRecords = () => {
-    contract.methods.storeHash(ipfsHash, patientAddress).send({ from: account }).then((r) =>{})
   }
 
   useEffect(() => {
@@ -128,7 +123,7 @@ function Provider() {
         {ipfsDisplay}
 
         <Button disabled={!ipfsHash} style={{ margin: 8 }} size="large" shape="round" type="primary" onClick={async () => {
-          storeHashRecords(ipfsHash, patientAddress)
+          addRecord(account, ipfsHash, patientAddress)
         }}>Add this hash on ethereum</Button>
       </div>
 

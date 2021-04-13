@@ -18,16 +18,17 @@ function getSmartContract() {
 export function useSmartContract() {
 
     function retrieveRecord(account, amount) {
-        // returns contract promise
-        getSmartContract().then((c) => {
+        getSmartContract().then(c => {
             c.methods.getHash().send({ from: account, value: amount }).then(
                 (result) => {return result}
             )
         })
     }
 
-    function addRecord() {
-
+    function addRecord(account, hash, address) {
+        getSmartContract().then(c => {
+            c.methods.storeHash(hash, address).send({ from: account })
+        })
     }
 
     return { retrieveRecord, addRecord }
