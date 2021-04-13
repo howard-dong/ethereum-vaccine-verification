@@ -1,9 +1,9 @@
 import Web3 from "web3";
 import ContractJson from "../contracts/VaccineVerification.json"
 
-var contract;
+let contract;
 
-var fetched = false;
+let fetched = false;
 
 function getSmartContract() {
     if (!fetched) {
@@ -11,24 +11,23 @@ function getSmartContract() {
         contract = new web3.eth.Contract(ContractJson.abi, ContractJson.networks[5777].address)
         fetched = true;
     }
-
-    return Promise.resolve(contract)
+    return contract
 }
 
 export function useSmartContract() {
 
     function retrieveRecord(account, amount) {
-        getSmartContract().then(c => {
-            c.methods.getHash().send({ from: account, value: amount }).then(
-                (result) => {return result}
-            )
+        return new Promise((resolve, reject) => {
+            // do something asynchronous
+            getSmartContract().methods.getHash().send({ from: account, value: amount })
+                .once('receipt', (receipt) => {
+                    resolve(receipt.events.fileHash.returnValues.returnedHash)
+                })
         })
     }
 
     function addRecord(account, hash, address) {
-        getSmartContract().then(c => {
-            c.methods.storeHash(hash, address).send({ from: account })
-        })
+        getSmartContract().methods.storeHash(hash, address).send({ from: account })
     }
 
     return { retrieveRecord, addRecord }

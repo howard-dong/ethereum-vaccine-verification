@@ -20,8 +20,9 @@ function User() {
             setAccount(result[0]))
     }, [])
 
-    const retrieveRecordHash = () => {
-        console.log(retrieveRecord(account, 10**18))
+    const retrieveRecordHash = async () => {
+        const hash = await retrieveRecord(account, 10**18)
+        setRecordHash(hash);
     }
 
     
