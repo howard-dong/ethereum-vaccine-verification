@@ -13,7 +13,7 @@ const { BufferList } = require('bl')
 const ipfsAPI = require('ipfs-http-client');
 const ipfs = ipfsAPI({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' })
 
-const getFromIPFS = async hashToGet => {
+const getFromIPFS = async (hashToGet) => {
   for await (const file of ipfs.get(hashToGet)) {
     console.log(file.path)
     if (!file.content) continue;

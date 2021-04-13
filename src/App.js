@@ -21,8 +21,8 @@ function App() {
                   <Link to="/user">Users</Link>
                 </li>
               </ul>
-              <Route path="/about" component={Provider} />
-              <Route path="/users" component={User} />
+              <Route path="/provider" component={Provider} />
+              <Route path="/user" component={User} />
             </div>
           </Router>
         </div>
