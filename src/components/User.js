@@ -38,7 +38,7 @@ function User() {
     const web3 = new Web3("http://localhost:7545")
     const accounts = web3.eth.getAccounts()
     accounts.then(result =>
-      setAccount(result[0]))
+      setAccount(result[1]))
   }, [])
 
   const retrieveRecordHash = async () => {
@@ -78,7 +78,7 @@ function User() {
         <Button style={{ margin: 8 }} size="large" shape="round" type="primary" onClick={() => {
           retrieveRecordHash()
         }}>
-          Get Hash
+          Get Data
         </Button>
 
         {recordHash}

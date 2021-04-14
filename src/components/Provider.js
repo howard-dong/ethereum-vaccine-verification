@@ -45,6 +45,26 @@ function Provider() {
   const [recordHash, setRecordHash] = useState("");
   const {addRecord} = useSmartContract()
 
+
+function captureFile(event){
+    event.preventDefault()
+    const file  = event.target.files[0]
+    const reader = new window.FileReader()
+    if (file !=null){
+      reader.readAsArrayBuffer(file)
+      reader.onloadend = () =>{
+        console.log('buffer', Buffer(reader.result))
+      }
+    }
+  }
+  
+
+  function onSubmit(event){
+    event.preventDefault()
+    console.log("an attempt was made")
+    ipfs.add(buffer)
+  }
+
   useEffect(() => {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
@@ -125,7 +145,13 @@ function Provider() {
         <Button disabled={!ipfsHash} style={{ margin: 8 }} size="large" shape="round" type="primary" onClick={async () => {
           addRecord(account, ipfsHash, patientAddress)
         }}>Add this hash on ethereum</Button>
-      </div>
+      </div>  
+      <form>
+        <input type='file' onChange={captureFile}/>
+        <button type='submit' onClick={onSubmit}>
+          Submit
+        </button>
+      </form>
 
 
     </div>
