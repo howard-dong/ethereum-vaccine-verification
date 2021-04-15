@@ -29,7 +29,7 @@ function User() {
   const [account, setAccount] = useState();
   const [recordHash, setRecordHash] = useState("");
   const [ipfsContents, setIpfsContents] = useState()
-  const { retrieveRecord } = useSmartContract();
+    const { retrieveRecord } = useSmartContract();
 
   useEffect(() => {
     if (window.ethereum) {
