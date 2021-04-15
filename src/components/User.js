@@ -5,6 +5,7 @@ import { useSmartContract } from "../hooks/LoadContract"
 import { Row, Col, Input, Button, Spin } from 'antd';
 import 'antd/dist/antd.css';
 import './../App.css';
+import { CONNECT_BUTTON_CLASSNAME } from "web3modal";
 
 const { BufferList } = require('bl')
 
@@ -38,10 +39,17 @@ function User() {
     const web3 = new Web3("http://localhost:7545")
     const accounts = web3.eth.getAccounts()
     accounts.then(result =>
-      setAccount(result[0]))
+      setAccount(result[1]))
   }, [])
 
+  useEffect(() => {
+    if (account) {
+      retrieveRecordHash()
+    }
+  }, [account])
+
   const retrieveRecordHash = async () => {
+    console.log(account)
     const hash = await retrieveRecord(account, 10 ** 18)
     setRecordHash(hash);
   }
@@ -56,7 +64,13 @@ function User() {
   }, [recordHash])
 
   let ipfsDisplay = ""
+  let recordDisplay = ""
   if (recordHash) {
+    recordDisplay = (
+      <pre style={{ margin: 8, padding: 8, border: "1px solid #dddddd", backgroundColor: "#ededed" }}>
+        {recordHash}
+      </pre>
+    )
     if (!ipfsContents) {
       ipfsDisplay = (
         <Spin />
@@ -66,23 +80,23 @@ function User() {
         <pre style={{ margin: 8, padding: 8, border: "1px solid #dddddd", backgroundColor: "#ededed" }}>
           {ipfsContents}
         </pre>
-        
+
       )
     }
+  } else {
+    recordDisplay = (
+      <pre style={{ margin: 8, padding: 8, border: "1px solid #dddddd", backgroundColor: "#ededed" }}>
+        {"No Hash Found"}
+      </pre>
+    )
   }
 
   return (
     <div>
       <div style={{ padding: 32, textAlign: "left" }}>
-
-        <Button style={{ margin: 8 }} size="large" shape="round" type="primary" onClick={() => {
-          retrieveRecordHash()
-        }}>
-          Get Hash
-        </Button>
-
-        {recordHash}
-
+        IPFS Hash:
+        {recordDisplay}
+        IPFS Contents:
         {ipfsDisplay}
       </div>
     </div>
