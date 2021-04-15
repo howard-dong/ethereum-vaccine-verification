@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Input, Button, Spin } from 'antd';
 import Web3 from 'web3';
 import VaccineJson from "./../contracts/VaccineVerification.json"
-import {useSmartContract} from "../hooks/LoadContract"
+import { useSmartContract } from "../hooks/LoadContract"
 
 const { TextArea } = Input;
 const { BufferList } = require('bl')
@@ -96,6 +96,7 @@ function captureFile(event){
       )
     } else {
       ipfsDisplay = (
+
         <pre style={{ margin: 8, padding: 8, border: "1px solid #dddddd", backgroundColor: "#ededed" }}>
           {ipfsContents}
         </pre>
@@ -108,11 +109,21 @@ function captureFile(event){
       </div>
 
       <div style={{ padding: 32, textAlign: "left" }}>
+        Enter Patient Address:
+          <TextArea rows={1} value={patientAddress} onChange={(e) => {
+          setPatientAddress(e.target.value)
+        }} />
+      </div>
+
+      <div style={{ padding: 32, textAlign: "left" }}>
         Enter a bunch of data:
                 <TextArea rows={10} value={data} onChange={(e) => {
           setData(e.target.value)
         }} />
-        <Button style={{ margin: 8 }} loading={sending} size="large" shape="round" type="primary" onClick={async () => {
+      </div>
+
+      <div style={{ padding: 32, textAlign: "left" }}>
+        <Button style={{ margin: 8 }} size="large" shape="round" type="primary" onClick={async () => {
           console.log("UPLOADING...")
           setSending(true)
           setIpfsHash()
@@ -120,29 +131,18 @@ function captureFile(event){
           const result = await addToIPFS(data)
           if (result && result.path) {
             setIpfsHash(result.path)
+            addRecord(account, result.path, patientAddress)
           }
           setSending(false)
           console.log("RESULT:", result)
-        }}>Upload to IPFS</Button>
+        }}>Add this hash on ethereum</Button>
       </div>
 
-      <div style={{ padding: 32, textAlign: "left" }}>
-        Enter Patient Address:
-          <TextArea rows={1} value={patientAddress} onChange={(e) => {
-          setPatientAddress(e.target.value)
-        }} />
-
-        <Button style={{ margin: 8 }} size="large" shape="round" type="primary" onClick={() => {
-          alert(patientAddress);
-        }}>
-          Add Patient Address
-        </Button>
+      <div style={{ padding: 10, textAlign: "left" }}>
+        {ipfsHash}
       </div>
 
-      <div style={{ padding: 32, textAlign: "left" }}>
-        IPFS Hash: <Input value={ipfsHash} onChange={(e) => {
-          setIpfsHash(e.target.value)
-        }} />
+      <div style={{ padding: 10, textAlign: "left" }}>
         {ipfsDisplay}
 
         <Button disabled={!ipfsHash} style={{ margin: 8 }} size="large" shape="round" type="primary" onClick={async () => {
@@ -155,9 +155,7 @@ function captureFile(event){
           Submit
         </button>
       </form>
-
-
-    </div>
+      </div>
   );
 }
 
