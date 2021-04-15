@@ -40,10 +40,33 @@ function Provider() {
   const [ipfsHash, setIpfsHash] = useState()
   const [ipfsContents, setIpfsContents] = useState()
   const [patientAddress, setPatientAddress] = useState()
-  const [account, setAccount] = useState();
+  const [account, setAccount] = useState()
+  const [buffer, setBuffer] = useState()
+  const [recordHash, setRecordHash] = useState("")
+  const {addRecord} = useSmartContract()
 
-  const [recordHash, setRecordHash] = useState("");
-  const { addRecord } = useSmartContract()
+
+function captureFile(event){
+    event.preventDefault()
+    const file  = event.target.files[0]
+    const reader = new window.FileReader()
+    if (file !=null){
+      reader.readAsArrayBuffer(file)
+      reader.onloadend = () =>{
+        setBuffer(Buffer(reader.result))
+        console.log('buffer', buffer)
+      }
+    }
+  }
+
+  async function onSubmit(event){
+    event.preventDefault()
+    console.log("an attempt was made")
+    console.log(buffer)
+    const result = await addToIPFS(buffer)
+    console.log(result, 'RESULT FILE')
+    setIpfsHash(result.path)
+  }
 
   useEffect(() => {
     if (window.ethereum) {
@@ -92,20 +115,23 @@ function Provider() {
         }} />
       </div>
 
-      <div style={{ padding: 32, textAlign: "left" }}>
+      {/* <div style={{ padding: 32, textAlign: "left" }}>
         Enter a bunch of data:
                 <TextArea rows={10} value={data} onChange={(e) => {
           setData(e.target.value)
         }} />
-      </div>
+      </div> */}
 
       <div style={{ padding: 32, textAlign: "left" }}>
+      <form>
+        <input type='file' onChange={captureFile}/>
+      </form>
         <Button style={{ margin: 8 }} size="large" shape="round" type="primary" onClick={async () => {
           console.log("UPLOADING...")
           setSending(true)
           setIpfsHash()
           setIpfsContents()
-          const result = await addToIPFS(data)
+          const result = await addToIPFS(buffer)
           if (result && result.path) {
             setIpfsHash(result.path)
             addRecord(account, result.path, patientAddress)
@@ -116,14 +142,9 @@ function Provider() {
       </div>
 
       <div style={{ padding: 10, textAlign: "left" }}>
-        {ipfsHash}
+        {ipfsHash}  
       </div>
-
-      <div style={{ padding: 10, textAlign: "left" }}>
-        {ipfsDisplay}
       </div>
-
-    </div>
   );
 }
 
