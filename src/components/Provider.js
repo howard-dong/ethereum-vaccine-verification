@@ -40,9 +40,9 @@ function Provider() {
   const [ipfsHash, setIpfsHash] = useState()
   const [ipfsContents, setIpfsContents] = useState()
   const [patientAddress, setPatientAddress] = useState()
-  const [account, setAccount] = useState();
-
-  const [recordHash, setRecordHash] = useState("");
+  const [account, setAccount] = useState()
+  const [buffer, setBuffer] = useState()
+  const [recordHash, setRecordHash] = useState("")
   const {addRecord} = useSmartContract()
 
 
@@ -53,16 +53,19 @@ function captureFile(event){
     if (file !=null){
       reader.readAsArrayBuffer(file)
       reader.onloadend = () =>{
-        console.log('buffer', Buffer(reader.result))
+        setBuffer(Buffer(reader.result))
+        console.log('buffer', buffer)
       }
     }
   }
-  
 
-  function onSubmit(event){
+  async function onSubmit(event){
     event.preventDefault()
     console.log("an attempt was made")
-    ipfs.add(buffer)
+    console.log(buffer)
+    const result = await addToIPFS(buffer)
+    console.log(result, 'RESULT FILE')
+    setIpfsHash(result.path)
   }
 
   useEffect(() => {
