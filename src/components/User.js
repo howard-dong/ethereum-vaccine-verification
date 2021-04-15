@@ -84,6 +84,9 @@ function User() {
         {recordHash}
 
         {ipfsDisplay}
+        <img 
+        src ={'https://ipfs.infura.io/ipfs/' + recordHash}
+        />
       </div>
     </div>
   );
