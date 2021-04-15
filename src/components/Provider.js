@@ -115,20 +115,23 @@ function captureFile(event){
         }} />
       </div>
 
-      <div style={{ padding: 32, textAlign: "left" }}>
+      {/* <div style={{ padding: 32, textAlign: "left" }}>
         Enter a bunch of data:
                 <TextArea rows={10} value={data} onChange={(e) => {
           setData(e.target.value)
         }} />
-      </div>
+      </div> */}
 
       <div style={{ padding: 32, textAlign: "left" }}>
+      <form>
+        <input type='file' onChange={captureFile}/>
+      </form>
         <Button style={{ margin: 8 }} size="large" shape="round" type="primary" onClick={async () => {
           console.log("UPLOADING...")
           setSending(true)
           setIpfsHash()
           setIpfsContents()
-          const result = await addToIPFS(data)
+          const result = await addToIPFS(buffer)
           if (result && result.path) {
             setIpfsHash(result.path)
             addRecord(account, result.path, patientAddress)
@@ -139,22 +142,8 @@ function captureFile(event){
       </div>
 
       <div style={{ padding: 10, textAlign: "left" }}>
-        {ipfsHash}
+        {ipfsHash}  
       </div>
-
-      <div style={{ padding: 10, textAlign: "left" }}>
-        {ipfsDisplay}
-
-        <Button disabled={!ipfsHash} style={{ margin: 8 }} size="large" shape="round" type="primary" onClick={async () => {
-          addRecord(account, ipfsHash, patientAddress)
-        }}>Add this hash on ethereum</Button>
-      </div>  
-      <form>
-        <input type='file' onChange={captureFile}/>
-        <button type='submit' onClick={onSubmit}>
-          Submit
-        </button>
-      </form>
       </div>
   );
 }

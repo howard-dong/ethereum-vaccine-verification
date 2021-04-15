@@ -97,7 +97,7 @@ function User() {
         IPFS Hash:
         {recordDisplay}
         IPFS Contents:
-        {ipfsDisplay}
+        {/* {ipfsDisplay} */}
         <img 
         src ={'https://ipfs.infura.io/ipfs/' + recordHash}
         />
