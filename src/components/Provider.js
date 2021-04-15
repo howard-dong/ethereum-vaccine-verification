@@ -81,8 +81,6 @@ function Provider() {
   }
   return (
     <div className="App">
-      <div style={{ position: 'fixed', textAlign: 'right', right: 0, top: 0, padding: 10 }}>
-      </div>
 
       <div style={{ padding: 32, textAlign: "left" }}>
         Enter a bunch of data:

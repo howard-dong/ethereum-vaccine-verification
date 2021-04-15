@@ -6,27 +6,31 @@ import './App.css';
 import 'antd/dist/antd.css';
 import Provider from './components/Provider'
 import User from './components/User'
+import Home from './components/Home'
 
 
 function App() {
     return (
-        <div className="App">
-          <Router>
-            <div>
-              <ul>
-                <li>
-                  <Link to="/provider">Health Provider</Link>
-                </li>
-                <li>
-                  <Link to="/user">Users</Link>
-                </li>
-              </ul>
-              <Route path="/provider" component={Provider} />
-              <Route path="/user" component={User} />
+       <Router>
+        <body class = "text-center vsc-initialized">
+            <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+                <header class ="masthead mb-auto">
+                    <div class="inner">
+                        <nav class="nav nav-masthead justify-content-center">
+                        <h3 class = "masthead-brand px-3">BlockchainVaccine</h3>
+                            <Link class = "nav-link" to = "/">Home</Link>
+                            <Link class = "nav-link" to = "/provider">Health Provider</Link>
+                            <Link class = "nav-link" to = "/user">User</Link>
+                        </nav>
+                    </div>
+                </header>
+                <Route exact path = "/" component={Home}/>
+                <Route path="/provider" component={Provider} />
+                <Route path="/user" component={User} />
             </div>
-          </Router>
-        </div>
-    );
+        </body>
+       </Router>
+    )
 }
 
 
