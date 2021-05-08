@@ -13,3 +13,8 @@ To get the application started, the following commands must be run.
 
 These commands allow truffle to compile and connect the application to the set up network and then open up the application interface.
 
+![image](https://user-images.githubusercontent.com/57418182/117551916-8742c080-b016-11eb-84bb-19000882dea6.png)
+
+![image](https://user-images.githubusercontent.com/57418182/117551926-91fd5580-b016-11eb-937c-060ac5f48163.png)
+
+![image](https://user-images.githubusercontent.com/57418182/117551933-99bcfa00-b016-11eb-841b-f8680cf0b018.png)
