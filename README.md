@@ -18,3 +18,7 @@ These commands allow truffle to compile and connect the application to the set u
 ![image](https://user-images.githubusercontent.com/57418182/117551926-91fd5580-b016-11eb-937c-060ac5f48163.png)
 
 ![image](https://user-images.githubusercontent.com/57418182/117551933-99bcfa00-b016-11eb-841b-f8680cf0b018.png)
+
+## Article
+
+https://medium.com/@li.rachel.cheng/blockchain-vaccination-verification-system-513edc1724ba
